@@ -17,11 +17,7 @@
 1.  What properties should House Rocket buy and at what price?
 2.  Once the property is purchased, when is the best time to sell it and at what price?</p>
 
-## 4.0 Summary
-
-- [Analysis Notebook](https://github.com/brunalimap/project_house_rocket/blob/main/notebooks/p01_house_rocket.ipynb)
-
-## 5.0  Estratégia usada para resolver este desafio foi:
+## 4.0  Estratégia usada para resolver este desafio foi:
 
 Step 01. Data collection: Download dataset from the Kaggle website and collect geographic locations with the API.
 
@@ -33,7 +29,7 @@ Step 04. Exploratory Data Analysis: For this step, the objective is to explore t
 
 Step 05. Data presentation: Created a dashboard using streamlit.
 
-## 6.0 Solution 
+## 5.0 Solution 
 
 <b>- What is the context?</b>
 
@@ -48,14 +44,14 @@ Step 05. Data presentation: Created a dashboard using streamlit.
 - <b>Problem type?</b> Insights the business
 - <b>How we will deliver?</b> Page Streamlit 
 
-## 7.0  References
+## 6.0  References
 - [Plotly](https://plotly.com/)
 - [Course Link](https://sejaumdatascientist.com/como-ser-um-data-scientist/) 
 
-## 8.0 Conclusion
+## 7.0 Conclusion
 
 
-## 9.0 Next steps:
+## 8.0 Next steps:
 
 - [x] Add requirements.txt
 - [ ] Record video of the solution
