@@ -9,8 +9,9 @@
 ## 2.0 Business Challenge
 
 <p> The purpose of this streamlit is to demonstrate some analysis of a data set of the company House Rocket. This data set has houses sold in the years 2014 to 2015. The CEO asked him to carry out some analysis to present to the business team, being these questions.
- 1. What properties should House Rocket buy and at what price?
- 2.  Once the property is purchased, when is the best time to sell it and at what price?</p>
+ 
+1. What properties should House Rocket buy and at what price?
+2.  Once the property is purchased, when is the best time to sell it and at what price?</p>
 
 ## 3.0 Summary
 
