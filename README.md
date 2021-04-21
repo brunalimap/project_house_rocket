@@ -10,7 +10,7 @@
 
 <p> The purpose of this streamlit is to demonstrate some analysis of a data set of the company House Rocket. This data set has houses sold in the years 2014 to 2015. The CEO asked him to carry out some analysis to present to the business team, being these questions.
  
-1. What properties should House Rocket buy and at what price?
+1.  What properties should House Rocket buy and at what price?
 2.  Once the property is purchased, when is the best time to sell it and at what price?</p>
 
 ## 3.0 Summary
@@ -20,9 +20,13 @@
 ## 4.0  Estratégia usada para resolver este desafio foi:
 
 Step 01. Data collection: Download dataset from the Kaggle website and collect geographic locations with the API.
+
 Step 02. Description of the data: In this stage the objective is to use statistical metrics to identify data outside the scope of the business.
-Step 03. Feature Engineering: Derive new attributes based on the original variables to better define the phenomenon that will be modeled
+
+Step 03. Feature Engineering: derive new attributes based on the original variables to better define the phenomenon.
+
 Step 04. Exploratory Data Analysis: For this step, the objective is to explore the data to better understand the impact of variables on model learning and find insights.
+
 Step 05. Data presentation: Created a dashboard using streamlit.
 
 ## 5.0 Solution 
