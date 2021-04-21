@@ -4,7 +4,7 @@
 ## 1.0 Summary
 
 - [Analysis Notebook](https://github.com/brunalimap/project_house_rocket/blob/main/notebooks/p01_house_rocket.ipynb)
-- [Access Dashboard](https://simulation-house-rocket.herokuapp.com/)
+- [Access Streamlit dashboard](https://simulation-house-rocket.herokuapp.com/)
 
 ## 2.0 Context
 
