@@ -52,6 +52,6 @@ Step 05. Data presentation: Created a dashboard using streamlit.
 
 ## 9.0 Next steps:
 
-- [x] Update requirements.txt
+- [x] Add requirements.txt
 - [ ] Record video of the solution
 - [ ] Conclusion Project
