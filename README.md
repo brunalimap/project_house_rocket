@@ -30,7 +30,7 @@ Step 05. Data presentation: Created a dashboard using streamlit.
 <b>- What is the context?</b>
 
 
-<b>- Why make ?</b>
+<b>- Why make a ?</b>
 
 
 <b>- Who is the project stakeholder?</b>
