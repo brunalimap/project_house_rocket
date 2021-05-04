@@ -31,7 +31,7 @@ Step 05. Data presentation: Created a dashboard using streamlit.
 
 ## 5.0 Solution 
 
-<b>- Who is the project stakeholder? The CEO of House Rocket</b>
+<b>- Who is the project stakeholder?</b> House Rocket's CEO
 
 <b>Used tools?</b>
 - Python 3.8
