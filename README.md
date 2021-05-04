@@ -54,6 +54,7 @@ In this project, I acquired some knowledge such as creating hypotheses of busine
 - [x] Add requirements.txt
 - [ ] Record video of the solution
 - [x] Conclusion Project
+- [ ] Translate the notebook
 
 ## 8.0  References
 
