@@ -17,7 +17,7 @@
 1.  What properties should House Rocket buy and at what price?
 2.  Once the property is purchased, when is the best time to sell it and at what price?</p>
 
-## 4.0  Estratégia usada para resolver este desafio foi:
+## 4.0   Solution Strategy:
 
 Step 01. Data collection: Download dataset from the Kaggle website and collect geographic locations with the API.
 
@@ -31,28 +31,31 @@ Step 05. Data presentation: Created a dashboard using streamlit.
 
 ## 5.0 Solution 
 
-<b>- What is the context?</b>
+<b>- Who is the project stakeholder? The CEO of House Rocket</b>
 
+<b>Used tools?</b>
+- Python 3.8
+- Jupyter Notebook
+- Visual code
 
-<b>- Why make a ?</b>
-
-
-<b>- Who is the project stakeholder?</b>
-
+<b>- Final product?</b>
+Dashboard in the streamlit, where the CEO can access the analysis and simulate the purchase of a house.
 
 <b>- What is the format?</b>
-- <b>Problem type?</b> Insights the business
-- <b>How we will deliver?</b> Page Streamlit 
+- <b>Problem type?</b> Data analysis 
+- <b>How we will deliver?</b> Dashboard at streamlit 
 
-## 6.0  References
-- [Plotly](https://plotly.com/)
-- [Course Link](https://sejaumdatascientist.com/como-ser-um-data-scientist/) 
+## 6.0 Conclusion
 
-## 7.0 Conclusion
+In this project, I acquired some knowledge such as creating hypotheses of business, collecting data from an API, building a page in the streamlit and manipulating the data.
 
-
-## 8.0 Next steps:
+## 7.0 Next steps:
 
 - [x] Add requirements.txt
 - [ ] Record video of the solution
-- [ ] Conclusion Project
+- [x] Conclusion Project
+
+## 8.0  References
+
+- [Plotly](https://plotly.com/)
+- [Course Link](https://sejaumdatascientist.com/como-ser-um-data-scientist/) 
