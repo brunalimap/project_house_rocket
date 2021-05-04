@@ -2,13 +2,11 @@
 
 import folium
 import geopandas
+import webbrowser
 import numpy          as np
 import pandas         as pd
 import streamlit      as st
 import plotly_express as px
-import seaborn        as sns
-import plotly.express as px
-
 
 from matplotlib        import pyplot as plt
 from datetime          import datetime
@@ -17,11 +15,11 @@ from folium.plugins    import MarkerCluster
 
 #layout page
 #============
-st.set_page_config(page_title = 'Insight - House Rocket',page_icon=':cityscape:',layout='wide') 
+st.set_page_config(page_title = 'Dashboard - House Rocket',page_icon=':cityscape:',layout='wide') 
 
 # Introduction page
 #===================
-st.markdown("<h1 style='text-align: center; color: black;'>Project of Insight House Rocket</h1>",unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>Project House Rocket</h1>",unsafe_allow_html=True)
 
 
 # Functions
@@ -46,30 +44,13 @@ def set_features(data):
    
 
     #add new feature
-    data['price_m2'] = data['price']/ data['sqft_lot']  
+    data['price_m2'] = data['price']/ data['sqft_lot']
+    #data['sqft_living'] = data['sqft_living'] *0.93  
 
     #st.write(data.dtypes)
   
     return data
 
-
-# Data Overview
-#===============
-
-def overview_data(data):
-
-    st.title('Data Overview')
-    st.markdown('View portfolio dataset used for analysis')
-
-    #Select columns
-    data = data[['id','zipcode','date','price','price_m2','sqft_living','bedrooms','bathrooms_real','floors','is_waterfront','condition_type','grade','yr_built']]
-
-    data = data.rename(columns={'bathrooms_real': 'bathrooms',
-                            'condition_type': 'condition',
-                            'is_waterfront':'waterfront'})
-
-    if st.checkbox('Show Data'): 
-        st.write(data)
 
 # Region Overview
 #===============
@@ -77,7 +58,7 @@ def overview_data(data):
 def portfolio_density(data,geofile):
 
     st.title('Region Overview')
-    st.markdown('View about the regions in the  dataset')
+    st.markdown('In this step we will see how the House Rocket dataset it is distributed by zipcode by region.')
    
     c1,c2 = st.beta_columns((1,1))
     
@@ -89,11 +70,12 @@ def portfolio_density(data,geofile):
     marker_cluster = MarkerCluster().add_to(density_map)
     for name, row in data.iterrows():
         folium.Marker([row['lat'],row['long']],
-            popup='Sold R${0} on: {1}, Features:{2} sqft, {3} bedrooms, {4} bathrooms, county: {5}, town:{6}'.format(row['price'],
+            popup='Sold R${0} on: {1}, Features:{2} m2, {3} bedrooms, {4} bathrooms,zipcode:{5} County: {6}, Town:{7}'.format(row['price'],
                     row['date'],
                     row['sqft_living'],
                     row['bedrooms'],
                     row['bathrooms_real'],
+                    row['zipcode'],
                     row['county'],
                     row['town']),
                     parse_html=True).add_to(marker_cluster)
@@ -103,24 +85,25 @@ def portfolio_density(data,geofile):
 
     #Avarage metrics
     df1 = data[['price','zipcode']].groupby('zipcode').count().reset_index() 
-    df2 = data[['price','zipcode']].groupby('zipcode').mean().reset_index()
-    df3 = data[['price_m2','zipcode']].groupby('zipcode').mean().reset_index()
-    df4 = data[['price_m2','zipcode']].groupby('zipcode').std().reset_index()
-    df5 = data[['bedrooms','zipcode']].groupby('zipcode').mean().reset_index()
-    df6 = data[['bathrooms_real','zipcode']].groupby('zipcode').mean().reset_index()
+    df2 = np.round(data[['price_m2','zipcode']].groupby('zipcode').mean(),1).reset_index()
+    df3 = np.round(data[['price_m2','zipcode']].groupby('zipcode').std(),1).reset_index()
+    df4 = np.round(data[['bedrooms','zipcode']].groupby('zipcode').mean(),1).reset_index()
+    df5 = np.round(data[['bathrooms_real','zipcode']].groupby('zipcode').mean(),1).reset_index()
+    
     #merge
     m1 = pd.merge(df1,df2,on='zipcode', how='inner')
     m2 = pd.merge(m1,df3,on='zipcode', how='inner')
     m3 = pd.merge(m2,df4,on='zipcode', how='inner')
-    m4 = pd.merge(m3,df5,on='zipcode', how='inner')
-    df = pd.merge(m4,df6,on='zipcode', how='inner')
+    df = pd.merge(m3,df5,on='zipcode', how='inner')
 
-    df.columns = ['Zipcode','Total Houses','Mean Price','Mean Price/m2','Std Price/m2','Mean bedromms','Mean Bathrooms']
+
+    df.columns = ['Zipcode','Total Houses','Mean Price/m2','Std Price/m2','Mean Bedromms','Mean Bathrooms']
   
+    
     with c1:
         st.dataframe(df,width= 650,height=500)
     
-    return None
+
 
 # Analysis per Town
 #====================
@@ -128,27 +111,16 @@ def portfolio_density(data,geofile):
 def region_town(data):
     
     st.title('Analysis per City')
+    st.markdown('In this step I collected the data from an API, so that the user can identify the median by region.')
 
     c1, c2 = st.beta_columns(2)
 
     df = data[['zipcode','town','price','condition_type']]   
-    aux = data[['price','zipcode']].groupby('zipcode').median().reset_index()  
-    aux = aux.rename(columns={'price': 'price_median'})    
-    aux01 = pd.merge(df,aux,on='zipcode',how='inner')   
-    aux01['status'] = 'NA'
 
-    for i in range(len(aux01)):
-        if (aux01['price'].loc[i] < aux01['price_median'].loc[i]) & (aux01['condition_type'].loc[i] != 'bad'):
-            aux01['status'].loc[i] = 'Yes'
+    aux03 = df[['town','price']].groupby('town').count().reset_index()
+    aux03 = aux03[['town','price']].sort_values('price',ascending=False).reset_index(drop= True)
 
-        else:
-            aux01['status'].loc[i] = 'No'
-
-    aux02 = aux01[aux01['status'] == 'Yes']
-    aux03 = aux02[['town','status']].groupby('town').count().reset_index()
-    aux03 = aux03[['town','status']].sort_values('status',ascending=False).reset_index(drop= True)
-
-    fig = px.bar(aux03, y='status', x='town',width=600, height=500,template="plotly_white")
+    fig = px.bar(aux03, y='price', x='town',width=600, height=500,template="plotly_white")
     fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',xaxis_tickangle=-45)
     fig.update_traces(marker_color='rgb(0,0,139)')
 
@@ -156,7 +128,7 @@ def region_town(data):
         st.header('Count per city')
         st.plotly_chart(fig)
 
-    aux04 = aux01[['town','price']].groupby('town').median().reset_index()
+    aux04 = df[['town','price']].groupby('town').median().reset_index()
     aux04 = aux04[['town','price']].sort_values('price',ascending=False).reset_index(drop= True)
 
     fig = px.bar(aux04, y='price', x='town',width=600, height=500,template="plotly_white")
@@ -171,6 +143,7 @@ def region_town(data):
 def season_sale(data):
 
     st.title('Sales Analysis per Season')
+    st.markdown('In this step I analyzed the sales by season and also an analysis of monthly sales.')
 
     c1, c2 = st.beta_columns(2)
 
@@ -201,7 +174,7 @@ def season_sale(data):
 def sales_simulation(data):
 
     st.title('Sales Analysis')
-    st.markdown('In this step we will conduct a price simulation for the sale of a home')    
+    st.markdown('In this step, we can simulate the best and worst scenario of the chosen region.')    
 
     c1, c2 = st.beta_columns(2)
 
@@ -218,31 +191,42 @@ def sales_simulation(data):
     for i in range(len(df)):  
         price_median = df.loc[df['zipcode'] == f_zipcode, 'price'].median() 
 
+    
     if (f_price <= price_median) & (f_season == 'winter') or (f_season == 'autumn'):
-        status = 'Yes'
+        #status = 'Yes'
         worst_scene = f_price + (f_price * 0.10)
         best_scene = f_price + (f_price * 0.15)
+        
 
-    elif (f_price <= price_median) & (f_season == 'summer') or (f_season == 'spring'): 
-        status = 'Yes' 
+    elif (f_price <= price_median) & (f_season == 'summer') or (f_season == 'spring'):  
         worst_scene = f_price +(f_price * 0.20)
         best_scene = f_price + (f_price * 0.30)
+       
 
     else:
         status = 'No' 
         best_scene = 0.0
         worst_scene = 0.0
     
+    if (best_scene <= price_median) & (worst_scene <= price_median): 
+        status = 'Yes'
+    else:
+        status = 'No'
+    
+
    
     with c1:
-        st.write(pd.DataFrame({
+        df2 = pd.DataFrame({   
         'Zipcode': [f_zipcode],
         'Price': [f_price],
         'Season': [f_season],
         'Price Median': [price_median],
         'Best Scene': [best_scene],
         'Worst Scene': [worst_scene],
-        'Purchase Status': [status],}))
+        'Purchase Status': [status]}).T
+        df2.columns = ['results']
+        
+        st.write(df2)
     
 
     fig = px.bar(y=[f_price,price_median,best_scene,worst_scene],x=['Price','Price Median','Best Scene','Worst Scene'],width=600, height=500,template='plotly_white',labels={'x':'','y':''})
@@ -252,12 +236,16 @@ def sales_simulation(data):
     with c2:
         st.plotly_chart(fig)
 
+def contacts(): 
 
+    url = 'https://github.com/brunalimap'
+
+       
 
 if __name__ == '__main__':
 
     # get data
-    path= '../data/streamlit_house_rocket.csv'
+    path= 'streamlit_house_rocket.csv'
     data_raw = get_data(path)
 
     #get geofile 
@@ -267,7 +255,7 @@ if __name__ == '__main__':
 
     data = set_features(data_raw)
 
-    overview_data(data)
+    #overview_data(data)
 
     portfolio_density(data,geofile)
 
@@ -276,6 +264,8 @@ if __name__ == '__main__':
     season_sale(data)
 
     sales_simulation(data)
+
+
 
 
 
