@@ -19,15 +19,15 @@
 
 ## 4.0   Solution Strategy:
 
-Step 01. Data collection: Download dataset from the Kaggle website and collect geographic locations with the API.
+<b>Step 01.</b> Data collection: Download dataset from the Kaggle website and collect geographic locations with the API.
 
-Step 02. Description of the data: In this stage the objective is to use statistical metrics to identify data outside the scope of the business.
+<b>Step 02.</b> Description of the data: In this stage the objective is to use statistical metrics to identify data outside the scope of the business.
 
-Step 03. Feature Engineering: derive new attributes based on the original variables to better define the phenomenon.
+<b>Step 03.</b> Feature Engineering: derive new attributes based on the original variables to better define the phenomenon.
 
-Step 04. Exploratory Data Analysis: For this step, the objective is to explore the data to better understand the impact of variables on model learning and find insights.
+<b>Step 04.</b> Exploratory Data Analysis: For this step, the objective is to explore the data to better understand the impact of variables on model learning and find insights.
 
-Step 05. Data presentation: Created a dashboard using streamlit.
+<b>Step 05.</b> Data presentation: Created a dashboard using streamlit.
 
 ## 5.0 Solution 
 
