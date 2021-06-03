@@ -238,20 +238,6 @@ def sales_simulation(data):
     with c2:
         st.plotly_chart(fig)
 
-def contacts(): 
-
-    url = 'https://github.com/brunalimap'
-
-       
-
-    if st.button('Github'):
-        webbrowser.open_new_tab(url)
-
-    
-    return None
-
-
-
 if __name__ == '__main__':
 
     # get data
@@ -275,7 +261,7 @@ if __name__ == '__main__':
 
     sales_simulation(data)
 
-    contacts()
+   
 
 
 
