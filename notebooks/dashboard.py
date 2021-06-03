@@ -58,7 +58,7 @@ def set_features(data):
 def portfolio_density(data,geofile):
 
     st.title('Region Overview')
-    st.markdown('In this step we will see how the House Rocket dataset it is distributed by zipcode by region.')
+    st.markdown('In this step we will see how the House Rocket dataset it is distributed by zipcode and by region.')
    
     c1,c2 = st.beta_columns((1,1))
     
@@ -120,8 +120,9 @@ def region_town(data):
     aux03 = df[['town','price']].groupby('town').count().reset_index()
     aux03 = aux03[['town','price']].sort_values('price',ascending=False).reset_index(drop= True)
 
-    fig = px.bar(aux03, y='price', x='town',width=600, height=500,template="plotly_white")
-    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',xaxis_tickangle=-45)
+    fig = px.bar(aux03, y='price', x='town',width=500, height=500,template="plotly_white")
+    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',xaxis = {'title': 'city'},
+                   yaxis = {'title': 'quantity of houses'},xaxis_tickangle=-45)
     fig.update_traces(marker_color='rgb(0,0,139)')
 
     with c1:
@@ -131,8 +132,9 @@ def region_town(data):
     aux04 = df[['town','price']].groupby('town').median().reset_index()
     aux04 = aux04[['town','price']].sort_values('price',ascending=False).reset_index(drop= True)
 
-    fig = px.bar(aux04, y='price', x='town',width=600, height=500,template="plotly_white")
-    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',xaxis_tickangle=-45)
+    fig = px.bar(aux04, y='price', x='town',width=500, height=500,template="plotly_white")
+    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide',xaxis = {'title': 'city'},
+                   yaxis = {'title': 'median price'},xaxis_tickangle=-45)
     fig.update_traces(marker_color='rgb(0,0,139)', col=1)
 
     with c2:
@@ -143,7 +145,7 @@ def region_town(data):
 def season_sale(data):
 
     st.title('Sales Analysis per Season')
-    st.markdown('In this step I analyzed the sales by season and also an analysis of monthly sales.')
+    st.markdown('In this step an analysis of the quantity of sales per season and we demonstrate median of monthly sales')
 
     c1, c2 = st.beta_columns(2)
 
@@ -153,7 +155,7 @@ def season_sale(data):
 
     #plot the graph
     fig = px.bar(aux, y='season', x='price',width=600, height=500,template="plotly_white")
-    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='show')
+    fig.update_layout(uniformtext_minsize=12,xaxis = {'title': 'quantity of houses'}, uniformtext_mode='show')
     fig.update_traces(marker_color='rgb(0,0,139)')
     
     with c1:
@@ -162,7 +164,7 @@ def season_sale(data):
 
     aux2 = data[['month','price']].groupby('month').median().reset_index()
     fig = px.bar(aux2, y='price', x='month',width=600, height=500,template="plotly_white",color='price')
-    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='show')
+    fig.update_layout(uniformtext_minsize=12, uniformtext_mode='show',yaxis = {'title': 'median price'})
     #fig.update_xaxes(range =[1,12])
     
     with c2:
@@ -174,7 +176,7 @@ def season_sale(data):
 def sales_simulation(data):
 
     st.title('Sales Analysis')
-    st.markdown('In this step, we can simulate the best and worst scenario of the chosen region.')    
+    st.markdown('In this step you can simulate the best and worst scenario for selling a house. Which we calculate from the region and the choice of season.')    
 
     c1, c2 = st.beta_columns(2)
 
@@ -242,6 +244,14 @@ def contacts():
 
        
 
+    if st.button('Github'):
+        webbrowser.open_new_tab(url)
+
+    
+    return None
+
+
+
 if __name__ == '__main__':
 
     # get data
@@ -265,7 +275,7 @@ if __name__ == '__main__':
 
     sales_simulation(data)
 
-
+    contacts()
 
 
 
